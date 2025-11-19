@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mizan Saiyad — Portfolio</title>
+<style>
+  /* ========= Config / Theme Variables ========= */
+  :root{
+    --navy: #071133;
+    --sky: #2ec4ff;
+    --purple: #8a2be2;
+    --bg-dark: #04030a;
+    --glass: rgba(255,255,255,0.04);
+    --glass-2: rgba(255,255,255,0.02);
+    --text: #e6f0ff;
+    --muted: #9aa8c7;
+    --accent-glow: 0 0 18px rgba(138, 43, 226, 0.3), 0 0 40px rgba(46, 196, 255, 0.2);
+    --card-radius: 14px;
+    --transition: 250ms cubic-bezier(.2,.9,.3,1);
+    --max-width: 1100px;
+  }
+
+  /* Light theme overrides */
+  [data-theme="light"]{
+    --bg-dark: #f6f8ff;
+    --glass: rgba(10,10,20,0.03);
+    --glass-2: rgba(10,10,20,0.02);
+    --text: #07122a;
+    --muted: #42506d;
+    --accent-glow: 0 0 14px rgba(46,196,255,0.15), 0 0 30px rgba(138,43,226,0.06);
+  }
+
+  /* ========= Reset & Layout ========= */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:var(--text);
+    background: linear-gradient(180deg, rgba(4,3,10,0.9), rgba(2,5,18,0.85));
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    position:relative;
+  }
+  /* place canvas behind content */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  /* container */
+  .wrap{
+    position:relative;
+    z-index: 1;
+    max-width:var(--max-width);
+    margin: 40px auto;
+    padding: 28px;
+  }
+
+  /* ========= Header / Nav ========= */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom: 28px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    user-select:none;
+  }
+  .logo{
+    width:44px;height:44px;border-radius:10px;
+    background: linear-gradient(135deg,var(--navy), var(--purple));
+    box-shadow: 0 6px 28px rgba(138,43,226,0.18), inset 0 -8px 24px rgba(46,196,255,0.06);
+    display:grid;place-items:center;color:white;font-weight:700;font-size:18px;
+  }
+  nav{
+    display:flex;gap:14px;align-items:center;
+  }
+  nav a{
+    color:var(--text);
+    text-decoration:none;padding:10px 12px;border-radius:10px;
+    transition:var(--transition);
+    font-weight:600;font-size:14px;
+  }
+  nav a:hover{
+    transform:translateY(-4px);
+    box-shadow: var(--accent-glow);
+    color: white;
+  }
+
+  /* toggle */
+  .controls{display:flex;gap:12px;align-items:center}
+  .toggle{
+    --w:56px; --h:30px;
+    width:var(--w); height:var(--h);
+    border-radius:999px; padding:4px; cursor:pointer;
+    display:inline-flex; align-items:center;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    box-shadow: 0 6px 20px rgba(2,5,18,0.6);
+    transition: var(--transition);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  .toggle .knob{
+    width:22px;height:22px;border-radius:50%;
+    background: linear-gradient(180deg, var(--sky), var(--purple));
+    transform: translateX(0);
+    transition: var(--transition);
+    box-shadow: 0 6px 18px rgba(138,43,226,0.2);
+  }
+  [data-theme="light"] .toggle .knob{
+    transform: translateX(26px);
+    background: linear-gradient(180deg, var(--purple), var(--sky));
+    box-shadow: 0 6px 18px rgba(46,196,255,0.12);
+  }
+
+  /* ========= Hero (Home) ========= */
+  .hero{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    border-radius: 18px;
+    padding: 36px;
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap: 26px;
+    align-items:center;
+    backdrop-filter: blur(6px);
+    border:1px solid var(--glass);
+    box-shadow: 0 10px 40px rgba(7,17,51,0.4);
+  }
+  @media (max-width:900px){
+    .hero{ grid-template-columns: 1fr; text-align:center; padding:24px;}
+  }
+  .hero .left{
+    padding-right:12px;
+  }
+  h1.hero-title{
+    margin:0 0 10px 0;
+    font-size:28px;
+    letter-spacing:0.4px;
+    text-shadow: 0 4px 18px rgba(46,196,255,0.06);
+  }
+  .hero .name-row{
+    display:flex;align-items:center;gap:12px;font-size:22px;font-weight:700;
+    margin-bottom:8px;
+  }
+  .name{
+    color:var(--sky);
+    text-shadow: 0 4px 28px rgba(46,196,255,0.06), 0 0 6px rgba(138,43,226,0.06);
+  }
+  /* typing container */
+  .typing{
+    min-width:190px;
+    color:var(--purple);
+    font-weight:600;
+    letter-spacing:0.3px;
+    display:inline-block;
+    position:relative;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  }
+  .typing .cursor{
+    display:inline-block;
+    width:2px;height:20px;background:var(--text);margin-left:6px;vertical-align:middle;
+    animation: blink 900ms infinite;
+    box-shadow: 0 0 14px var(--sky), 0 0 22px var(--purple);
+  }
+  @keyframes blink{ 50%{ opacity:0.15 } }
+
+  /* social icons (glowing) */
+  .socials{ display:flex; gap:12px; margin-top:14px; align-items:center; }
+  .social{
+    width:44px;height:44px;border-radius:10px;
+    display:grid;place-items:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    transition:var(--transition); cursor:pointer;
+    box-shadow: var(--accent-glow);
+  }
+  .social svg{ width:20px;height:20px; fill:var(--text); opacity:0.95; transition: transform 220ms ease; }
+  .social:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 10px 40px rgba(138,43,226,0.28); }
+  .social:active{ transform: translateY(-2px) scale(.99); }
+
+  /* photo placeholder */
+  .photo-placeholder{
+    width:100%;max-width:320px;height:320px;border-radius:16px;
+    background:
+      linear-gradient(135deg, rgba(46,196,255,0.06), rgba(138,43,226,0.05)),
+      radial-gradient(circle at 20% 25%, rgba(46,196,255,0.06), transparent 10%),
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid var(--glass-2);
+    display:grid;place-items:center; color:var(--muted);
+    box-shadow: 0 20px 60px rgba(2,5,18,0.55), 0 0 30px rgba(138,43,226,0.09);
+    position:relative; 
+  }
+  .photo-placeholder .avatar{
+    width:86%; height:86%; border-radius:12px;
+    background: linear-gradient(135deg, rgba(10,20,40,0.6), rgba(40,10,60,0.35));
+    display:grid;place-items:center;color:var(--muted); font-weight:700;
+    border: 1px dashed rgba(255,255,255,0.03);
+  }
+  .avatar img{
+    height: 300px;
+    width: auto;
+  }
+  .photo-note{ font-size:13px;margin-top:8px;opacity:0.9;color:var(--muted) }
+
+  /* ========= About ========= */
+  .section{
+    margin-top:36px;
+    padding:28px;border-radius:14px;border:1px solid var(--glass);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    display:flex;gap:20px;align-items:center;
+    backdrop-filter: blur(6px);
+  }
+  .about-left{ flex:1; min-width:240px; }
+  .about-right{ width:280px; display:flex;flex-direction:column;gap:12px; align-items:center; justify-content:center; }
+  .about h2{ margin:0 0 12px 0; font-size:20px; }
+  .about p{ color:var(--muted); line-height:1.6; margin:0 }
+  .profile-img{
+    width:200px;height:200px;border-radius:12px; border:1px solid var(--glass-2);
+    background: linear-gradient(135deg,var(--navy), var(--purple));
+    display:grid;place-items:center;font-weight:700; font-size:18px;
+    box-shadow: 0 16px 50px rgba(10,10,30,0.5), var(--accent-glow);
+  }
+
+  /* ========= Projects ========= */
+  .projects-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+    margin-top:16px;
+  }
+  .project-card{
+    border-radius:12px;padding:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+    transition: transform 260ms cubic-bezier(.2,.9,.3,1), box-shadow 260ms;
+    cursor: pointer;
+    overflow:hidden;
+  }
+  .project-card:hover{
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 18px 60px rgba(10,10,30,0.5), 0 0 40px rgba(138,43,226,0.16);
+  }
+  .project-thumb{ height:140px;border-radius:10px; background: linear-gradient(135deg,var(--purple),var(--sky)); margin-bottom:10px; display:block; }
+  .project-title{ font-weight:700;margin:0 0 6px 0; }
+  .project-desc{ margin:0;color:var(--muted); font-size:14px; }
+
+  /* ========= Contact ========= */
+  .contact-form{ display:flex;flex-direction:column; gap:12px; width:100%; max-width:640px; }
+  .field{
+    display:flex; gap:12px; align-items:center; padding:10px; border-radius:12px;
+    border:1px solid var(--glass); background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    transition: box-shadow 160ms, transform 160ms;
+  }
+  .field:focus-within{ box-shadow: 0 10px 40px rgba(46,196,255,0.08); transform: translateY(-4px); }
+  .field input, .field textarea{
+    width:100%; border:0; outline:0; background:transparent; color:var(--text); font-size:15px;
+  }
+  .send-btn{
+    display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;border:0;
+    cursor:pointer;font-weight:700;background:linear-gradient(90deg,var(--sky),var(--purple));
+    box-shadow: 0 12px 50px rgba(46,196,255,0.12), 0 0 40px rgba(138,43,226,0.08);
+    color:#02122a;transition: transform 180ms, box-shadow 180ms;
+  }
+  .send-btn:hover{ transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 64px rgba(138,43,226,0.18); }
+
+  /* small helpers */
+  .muted{ color:var(--muted); }
+  .spacer{height:14px}
+  footer{ margin:28px 0 80px 0; text-align:center; color:var(--muted); font-size:13px; }
+
+  /* small responsive adjustments */
+  @media (max-width:560px){
+    nav{ display:none }
+    .wrap{ padding:16px;margin:16px }
+    .hero{ padding:18px }
+    .photo-placeholder{ height:220px; max-width:100%; }
+  }
+</style>
+</head>
+<body data-theme="dark">
+<canvas id="bg-canvas"></canvas>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">MS</div>
+      <div>
+        <div style="font-weight:800">Mizan Saiyad</div>
+        <div style="font-size:12px;color:var(--muted)">Software Developer • Creative Coder</div>
+      </div>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="controls">
+      <div class="social" title="Email" id="icon-mail" aria-hidden="true">
+        <!-- Envelope -->
+        <svg viewBox="0 0 24 24"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11zM5.5 6l6.25 4.25c.44.3 1.02.3 1.46 0L19 6"/></svg>
+      </div>
+
+      <div class="toggle" id="theme-toggle" role="switch" aria-checked="false" aria-label="Toggle theme">
+        <div class="knob"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <section id="home" class="hero" aria-labelledby="hero-heading">
+    <div class="left">
+      <h1 class="hero-title" id="hero-heading">Welcome to my portfolio!</h1>
+
+      <div class="name-row">
+        <div class="name">Mizan Saiyad</div>
+        <div class="typing" aria-live="polite">
+          <span id="type-text"></span><span class="cursor"></span>
+        </div>
+      </div>
+
+      <p class="muted">I build elegant, high-performance web applications and creative interactive experiences. Explore my work below.</p>
+
+      <div class="socials" aria-hidden="false">
+        <a class="social" href="#" title="GitHub (placeholder)" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.2.8-.5v-1.9c-3.3.7-4-1.6-4-1.6-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1 1.6-.8 1.8-1.2.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4 1.2-3.3-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C18 3.3 19 3.6 19 3.6c.6 1.6.2 2.8.1 3.1.7.9 1.2 2 1.2 3.3 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.2c0 .3.2.6.8.5A12 12 0 0 0 12 .5z"/></svg>
+        </a>
+
+        <a class="social" href="#" title="LinkedIn (placeholder)" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M4.98 3.5A2.5 2.5 0 1 0 4.97 8 2.5 2.5 0 0 0 4.98 3.5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-.9 1.8-1.7 3.6-1.7 3.9 0 4.6 2.6 4.6 6v7H18v-6.2c0-1.5 0-3.4-2.1-3.4-2.1 0-2.4 1.6-2.4 3.3V21H9z"/></svg>
+        </a>
+
+        <a class="social" href="#" title="Email (placeholder)" aria-label="Email">
+          <svg viewBox="0 0 24 24"><path d="M12 12.713L3 6.5V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.5L12 12.713zM21 5H3a2 2 0 0 0-2 2v.8L12 13.8 23 7.8V7a2 2 0 0 0-2-2z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="photo-placeholder" role="img" aria-label="Photo placeholder for Mizan">
+        <div class="avatar">
+            <img src="./images/img1.jpg" alt="">
+        </div>
+      </div>
+      <div class="photo-note muted">Place your portrait here — replace with an &lt;img&gt; tag pointing to your picture.</div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section about" aria-labelledby="about-title">
+    <div class="about-left">
+      <h2 id="about-title">About Me</h2>
+      <p class="muted">Hi — I'm <strong>Mizan Saiyad</strong>, a software developer, problem solver, and creative coder. I focus on building responsive, performant web applications and creative interactive experiences. I like to combine clean engineering with playful interactive UIs to deliver delightful user experiences. I'm comfortable across the full stack, love learning new tools, and enjoy solving real-world problems with elegant code.</p>
+
+      <div class="spacer"></div>
+      <p class="muted">Tech interests: JavaScript, React, Node, Web Animations, Canvas/WebGL, UX, and creative coding with interactive visuals.</p>
+    </div>
+
+    <div class="about-right">
+      <div class="profile-img">Profile Image</div>
+      <div class="muted" style="font-size:13px;text-align:center">Replace with your real photo — keep image dimensions ~600×600px for best results.</div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section" aria-labelledby="projects-title" style="flex-direction:column; align-items:stretch">
+    <h2 id="projects-title">Projects</h2>
+    <p class="muted">A few examples of projects — click to view details or replace these placeholders with your real projects.</p>
+
+    <div class="projects-grid" role="list">
+      <article class="project-card" role="listitem" tabindex="0" aria-label="Project One">
+        <div class="project-thumb"></div>
+        <h3 class="project-title">Project One</h3>
+        <p class="project-desc">A creative web app combining animation and performance. Built with modern JavaScript and thoughtful UI design.</p>
+      </article>
+
+      <article class="project-card" role="listitem" tabindex="0" aria-label="Project Two">
+        <div class="project-thumb"></div>
+        <h3 class="project-title">Project Two</h3>
+        <p class="project-desc">An interactive visualization project using Canvas to render responsive particle systems and data-driven visuals.</p>
+      </article>
+
+      <article class="project-card" role="listitem" tabindex="0" aria-label="Project Three">
+        <div class="project-thumb"></div>
+        <h3 class="project-title">Project Three</h3>
+        <p class="project-desc">A full-stack application with user authentication and clean UX. Focus on accessibility and progressive enhancement.</p>
+      </article>
+
+      <!-- Duplicate or replace to make up to 6 -->
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section" aria-labelledby="contact-title" style="flex-direction:column; align-items:flex-start">
+    <h2 id="contact-title">Contact</h2>
+    <p class="muted">Have a project, idea, or just want to say hi? Send a message and I'll reply as soon as I can.</p>
+
+    <form class="contact-form" id="contact-form" onsubmit="return false;" novalidate>
+      <div class="field">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zM12 14c-4.4 0-8 2.2-8 4.9V22h16v-3.1C20 16.2 16.4 14 12 14z"/></svg>
+        <input id="name" name="name" placeholder="Your name" required />
+      </div>
+
+      <div class="field">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11zM5.5 6l6.25 4.25c.44.3 1.02.3 1.46 0L19 6"/></svg>
+        <input id="email" name="email" type="email" placeholder="your@email.com" required />
+      </div>
+
+      <div class="field" style="align-items:flex-start; padding-top:12px; padding-bottom:12px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:6px"><path fill="currentColor" d="M4 4h16v2H4zM4 9h16v11H4z"/></svg>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="send-btn" id="send-btn" type="submit" aria-label="Send message">
+          <svg width="16" height="16" viewBox="0 0 24 24" style="opacity:0.95"><path fill="currentColor" d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+          <span>Send Message</span>
+        </button>
+        <div id="form-status" class="muted" style="font-size:13px"></div>
+      </div>
+    </form>
+  </section>
+
+  <footer>&copy; <span id="year"></span> Mizan Saiyad — Built with ✨</footer>
+</div>
+
+<script>
+/* ========= Utilities & Init ========= */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+
+/* ========= Typing + Rotating Titles ========= */
+const titles = ["Software Developer","Creative Developer","Developer"];
+const typeEl = document.getElementById('type-text');
+let tI = 0, cI = 0, isDeleting=false;
+const typingSpeed = 80, deletingSpeed = 40, pauseBetween = 1200;
+
+function tick(){
+  const full = titles[tI];
+  if (!isDeleting){
+    cI++;
+    typeEl.textContent = full.slice(0,cI);
+    if (cI === full.length){
+      isDeleting = true;
+      setTimeout(tick, pauseBetween);
+      return;
+    }
+  } else {
+    cI--;
+    typeEl.textContent = full.slice(0,cI);
+    if (cI === 0){
+      isDeleting = false;
+      tI = (tI + 1) % titles.length;
+    }
+  }
+  setTimeout(tick, isDeleting ? deletingSpeed : typingSpeed);
+}
+tick();
+
+
+function draw(){
+  // subtle gradient overlay (changes with theme)
+  const theme = document.body.getAttribute('data-theme');
+  ctx.clearRect(0,0,W,H);
+  // base dim background
+  if (theme === 'dark'){
+    ctx.fillStyle = 'rgba(1,2,6,0.45)';
+  } else {
+    ctx.fillStyle = 'rgba(250,250,255,0.7)';
+  }
+  ctx.fillRect(0,0,W,H);
+
+  // draw orbs
+  for (let p of particles){
+    // movement
+    p.x += p.vx + Math.sin(Date.now() / 500 + p.r) * 0.15;
+    p.y += p.vy + Math.cos(Date.now() / 600 + p.r) * 0.12;
+    // wrap
+    if (p.x < -50) p.x = W + 50;
+    if (p.x > W + 50) p.x = -50;
+    if (p.y < -50) p.y = H + 50;
+    if (p.y > H + 50) p.y = -50;
+
+    // attraction to mouse
+    const dx = pointer.x - p.x;
+    const dy = pointer.y - p.y;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if (dist < 120){
+      p.x -= dx * 0.003;
+      p.y -= dy * 0.003;
+    }
+
+    // glow
+    const grad = ctx.createRadialGradient(p.x,p.y,p.r*0.2,p.x,p.y,p.r*12);
+    // mix of sky-blue and purple
+    grad.addColorStop(0, `hsla(${p.hue},100%,65%,0.85)`);
+    grad.addColorStop(0.6, `hsla(${p.hue-60},100%,55%,0.16)`);
+    grad.addColorStop(1, `rgba(0,0,0,0)`);
+    ctx.beginPath();
+    ctx.fillStyle = grad;
+    ctx.arc(p.x, p.y, p.r*8, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // connect nearby particles with soft glowing lines
+  for (let i=0;i<particles.length;i++){
+    for (let j=i+1;j<particles.length;j++){
+      const a = particles[i], b = particles[j];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 120){
+        const alpha = 0.08 * (1 - d/120);
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(140,48,226,${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.moveTo(a.x,a.y);
+        ctx.lineTo(b.x,b.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // floating subtle wavy lines (animated)
+  ctx.beginPath();
+  ctx.lineWidth = 1.2;
+  for (let i=0;i<6;i++){
+    ctx.strokeStyle = `rgba(46,196,255,${0.02 + i*0.01})`;
+    ctx.beginPath();
+    const offset = (Date.now()/1000)*(0.06 + i*0.02);
+    for (let x=0;x<W;x+=20){
+      const y = H*0.2 + Math.sin(x*0.002 + offset + i) * (40 + i*10) + i*40;
+      if (x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* ========= Small interaction: keyboard focus styles for cards ========= */
+document.querySelectorAll('.project-card').forEach(card=>{
+  card.addEventListener('keydown', (e)=> {
+    if (e.key === 'Enter' || e.key === ' ') { card.click(); }
+  });
+});
+
+/* ========= Accessibility: keyboard nav for anchor links on small screens ========= */
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click', ()=> {
+    // close mobile nav if necessary (not implemented) - placeholder
+  });
+});
+
+/* ========= Nice initial fade-in using CSS (applied via JS) ========= */
+document.documentElement.style.transition = 'background 600ms ease';
+document.querySelector('.wrap').style.opacity = 0;
+setTimeout(()=> {
+  document.querySelector('.wrap').style.transition = 'opacity 700ms ease';
+  document.querySelector('.wrap').style.opacity = 1;
+}, 80);
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Theme toggle with persistence */
+const body = document.body;
+const themeToggle = document.getElementById('theme-toggle');
+
+function setTheme(t){
+  body.setAttribute('data-theme', t);
+  themeToggle.setAttribute('aria-checked', t === 'light' ? 'true' : 'false');
+  localStorage.setItem('ms_theme', t);
+}
+
+const saved = localStorage.getItem('ms_theme') || 'dark';
+setTheme(saved);
+
+themeToggle.addEventListener('click', ()=>{
+  const current = body.getAttribute('data-theme');
+  setTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+/* ========= Typing Effect ========= */
+const words = ["Web Developer", "Frontend Engineer", "Creative Coder", "UI/UX Enthusiast"];
+let i = 0, j = 0, deleting = false;
+
+function typeEffect(){
+  const textDisplay = document.getElementById("type-text");
+
+  if (!deleting) {
+    textDisplay.textContent = words[i].slice(0, ++j);
+    if (j === words[i].length) {
+      deleting = true;
+      setTimeout(typeEffect, 900);
+      return;
+    }
+  } else {
+    textDisplay.textContent = words[i].slice(0, --j);
+    if (j === 0) {
+      deleting = false;
+      i = (i + 1) % words.length;
+    }
+  }
+  setTimeout(typeEffect, deleting ? 60 : 90);
+}
+typeEffect();
+
+/* ========= Background Animation (Canvas Particles) ========= */
+const canvas = document.getElementById("bg-canvas");
+const ctx = canvas.getContext("2d");
+
+let w, h;
+function resize(){
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let particles = [];
+for(let i=0; i<70; i++){
+  particles.push({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    r: Math.random() * 2 + 1,
+    dx: (Math.random() - .5) * 0.7,
+    dy: (Math.random() - .5) * 0.7
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,w,h);
+
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(138,43,226,0.15)";
+    ctx.fill();
+
+    p.x += p.dx;
+    p.y += p.dy;
+
+    if(p.x < 0 || p.x > w) p.dx *= -1;
+    if(p.y < 0 || p.y > h) p.dy *= -1;
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ========= Contact Form (Fake Submission) ========= */
+const form = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
+
+form.addEventListener("submit", ()=>{
+  formStatus.textContent = "Sending...";
+  setTimeout(()=>{
+    formStatus.textContent = "Message sent successfully ✔️";
+  }, 800);
+});
+</script>
+</body>
+</html>
