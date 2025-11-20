@@ -1,53 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mizan Saiyad Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mizan Saiyad | Matrix Portfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <h2>Mizan</h2>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+
+    <header>
+        <h2 class="logo">Mizan</h2>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
     <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Welcome to my Portfolio</h1>
-            <p>Hi, I'm <strong>Mizan Saiyad</strong></p>
-            <img src="https://via.placeholder.com/250" alt="Profile" />
+        <div class="content">
+            <h3>WELCOME TO THE MATRIX</h3>
+            <h1>I am <span>Mizan Saiyad</span></h1>
+            <p>Frontend Developer • Animation Lover • UI Designer</p>
+
+            <div class="buttons">
+                <a href="#projects" class="btn">View Projects</a>
+                <a href="#contact" class="btn2">Contact</a>
+            </div>
         </div>
     </section>
 
-    <section id="about" class="about">
-        <h1 class="title">About Me</h1>
+    <section id="about" class="section">
+        <h2 class="title">ABOUT ME</h2>
         <p>
-            I am a passionate software developer skilled in building modern and clean UI/UX.
-            I love coding, problem solving, and creating smooth interactive experiences.
+            I'm a creative frontend developer who enjoys making futuristic, 
+            animated, and clean UI designs. I mix creativity with technology 
+            to build experiences that feel alive.
         </p>
     </section>
 
-    <section id="projects" class="projects">
-        <h1 class="title">Projects</h1>
-        <div class="project-box">Project 1 - Description</div>
-        <div class="project-box">Project 2 - Description</div>
-        <div class="project-box">Project 3 - Description</div>
+    <section id="projects" class="section">
+        <h2 class="title">PROJECTS</h2>
+
+        <div class="project-grid">
+            <div class="card">
+                <h3>Nebula Notes</h3>
+                <p>Offline-first notes app.</p>
+            </div>
+            <div class="card">
+                <h3>Glowfolio</h3>
+                <p>Neon portfolio template.</p>
+            </div>
+            <div class="card">
+                <h3>PulseDash</h3>
+                <p>Real-time dashboard UI.</p>
+            </div>
+        </div>
     </section>
 
-    <section id="contact" class="contact">
-        <h1 class="title">Contact Me</h1>
-        <form>
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Your Email" required />
-            <textarea placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
+    <section id="contact" class="section">
+        <h2 class="title">CONTACT</h2>
+
+        <form class="contact-form">
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Email">
+            <textarea placeholder="Message"></textarea>
+            <button class="btn">Send</button>
         </form>
     </section>
+
+    <footer>
+        © 2025 Mizan Saiyad — Matrix Portfolio
+    </footer>
+
 </body>
 </html>
