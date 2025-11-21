@@ -61,6 +61,16 @@ nav a{
     border-bottom: 3px solid transparent;
 }
 
+ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+    white-space: nowrap;
+    justify-content: space-between;
+}
+
+
 nav a:hover,
 nav a.active{
     color: #b74b4b;
@@ -236,12 +246,6 @@ span{
     }
     41%, 60%{
         content: "Web Designer";
-    }
-    61%, 80%{
-        content: "Youtuber";
-    }
-    81%, 100%{
-        content: "Script Writer";
     }
 }
 
